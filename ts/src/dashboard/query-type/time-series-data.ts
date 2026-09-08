@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import type { AbsoluteTimeRange } from '../../common';
+import type { AbsoluteTimeRange, UnixTimeMs } from '../../common';
 import type { BaseMetadata } from './base-metadata';
 import type { Labels, TimeSeriesValueTuple, TimeSeriesHistogramTuple } from './time-series-queries';
 
@@ -26,6 +26,7 @@ export interface TimeSeriesData {
   timeRange?: AbsoluteTimeRange;
   stepMs?: number;
   series: TimeSeries[];
+  exemplars?: TimeSeriesExemplars[];
   metadata?: TimeSeriesMetadata;
 }
 
@@ -39,4 +40,15 @@ export interface TimeSeries {
 
 export interface TimeSeriesMetadata extends BaseMetadata {
   [key: string]: unknown;
+}
+
+export interface Exemplar {
+  labels: Labels;
+  value: number;
+  timestamp: UnixTimeMs;
+}
+
+export interface TimeSeriesExemplars {
+  seriesLabels: Labels;
+  exemplars: Exemplar[];
 }
